@@ -29,7 +29,8 @@ class LispSyntax
             }
             
             if ($token == '(') {
-                $token = $this->getList();
+                array_push($list, $this->getList());
+                continue;
             }
             
             array_push($list, $token);
