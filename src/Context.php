@@ -33,16 +33,18 @@ class Context
 
     public function register($name, $func)
     {
-        $this->library[$name] = $func;
+        $norm = strtoupper($name);
+        $this->library[$norm] = $func;
     }
 
-    public function run($func, $params, $depth)
+    public function run($name, $params)
     {
-        if (!isset($this->library[$func])) {
-            return;
+        $norm = strtoupper($name);
+        if (!isset($this->library[$norm])) {
+            throw new \Exception('Function "' . $name . '" is not found');
         }
-        $function = $this->library[$func];
-        return $function->run($this, $params);
+        $func = $this->library[$norm];
+        return $func->run($this, $params);
     }
 
 }

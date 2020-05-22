@@ -20,7 +20,7 @@ class FunctionTest extends TestCase
         $this->assertEquals(5, $machine->parseAndRun('5'));
         $this->assertEquals(5, $machine->parseAndRun('(GET param1)'));
         $this->assertFalse($machine->parseAndRun('(AND 1 0)'));
-        $this->assertTrue($machine->parseAndRun('(AND 1 1)'));
+        $this->assertTrue($machine->parseAndRun('(and 1 1)'));
         $this->assertTrue($machine->parseAndRun('(AND (GET param1) (GET param2))'));
         $this->assertFalse($machine->parseAndRun('(AND (GET param1) (GET param3))'));
         $this->assertTrue($machine->parseAndRun('(OR (GET param1) (GET param3))'));
