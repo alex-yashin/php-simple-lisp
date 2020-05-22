@@ -27,19 +27,19 @@ class LispMachine
         $this->register('DEFUN', new Functions\DefunFunction());
     }
 
-    public function run($lists)
+    public function run($program)
+    {
+        $syntax = new LispSyntax;
+        return $this->calcLists($syntax->parse($program));
+    }
+    
+    public function calcLists($lists)
     {
         $r = null;
         foreach ($lists as $list) {
             $r = $this->calc($list);
         }
         return $r;
-    }
-    
-    public function parseAndRun($program)
-    {
-        $syntax = new LispSyntax;
-        return $this->run($syntax->parse($program));
     }
     
     public function setState($state)

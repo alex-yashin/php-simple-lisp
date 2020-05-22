@@ -9,9 +9,9 @@
         'param3' => 0,
     ]);
 
-    echo $machine->parseAndRun('5'); //5
-    echo $machine->parseAndRun('param1'); //5
-    echo $machine->parseAndRun('(AND 1 0)'); //false
-    echo $machine->parseAndRun('(AND param1 param2)'); //true
+    echo $machine->run('5'); //5
+    echo $machine->run('param1'); //5
+    echo $machine->run('(AND 1 0)'); //false
+    echo $machine->run('(AND param1 param2)'); //true
 
-    echo $machine->parseAndRun('(defun fibonacci (n) (if (> n 1) (+ (fibonacci (- n 1)) (fibonacci (- n 2))) n)) (fibonacci 7)'); //13
+    echo $machine->run('(defun fibonacci (n) (if (> n 1) (+ (fibonacci (- n 1)) (fibonacci (- n 2))) n)) (fibonacci 7)'); //13
