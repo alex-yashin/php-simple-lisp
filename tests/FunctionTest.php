@@ -8,14 +8,12 @@ class FunctionTest extends TestCase
 
     public function testFunctions()
     {
-        $context = new \SimpleLisp\Context();
-        $context->load([
+        $machine = new \SimpleLisp\LispMachine();
+        $machine->setState([
             'param1' => 5,
             'param2' => 1,
             'param3' => 0,
         ]);
-
-        $machine = new \SimpleLisp\LispMachine($context);
 
         $this->assertEquals(5, $machine->parseAndRun('5'));
         $this->assertEquals(5, $machine->parseAndRun('param1'));
@@ -68,12 +66,12 @@ class FunctionTest extends TestCase
          (fibonacci (- n 2)))
       n))';
 
-        $this->assertEquals(1, $machine->parseAndRun($fibonacci. '(fibonacci 2)'));
-        $this->assertEquals(2, $machine->parseAndRun($fibonacci. '(fibonacci 3)'));
-        $this->assertEquals(3, $machine->parseAndRun($fibonacci. '(fibonacci 4)'));
-        $this->assertEquals(5, $machine->parseAndRun($fibonacci. '(fibonacci 5)'));
-        $this->assertEquals(8, $machine->parseAndRun($fibonacci. '(fibonacci 6)'));
-        $this->assertEquals(13, $machine->parseAndRun($fibonacci. '(fibonacci 7)'));
+        $this->assertEquals(1, $machine->parseAndRun($fibonacci . '(fibonacci 2)'));
+        $this->assertEquals(2, $machine->parseAndRun($fibonacci . '(fibonacci 3)'));
+        $this->assertEquals(3, $machine->parseAndRun($fibonacci . '(fibonacci 4)'));
+        $this->assertEquals(5, $machine->parseAndRun($fibonacci . '(fibonacci 5)'));
+        $this->assertEquals(8, $machine->parseAndRun($fibonacci . '(fibonacci 6)'));
+        $this->assertEquals(13, $machine->parseAndRun($fibonacci . '(fibonacci 7)'));
     }
 
 }

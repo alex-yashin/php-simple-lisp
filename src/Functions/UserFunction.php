@@ -16,7 +16,7 @@ class UserFunction implements FunctionInterface
 
     public function run($context, $params)
     {
-        $data = $context->getData();
+        $state = $context->getState();
         $ps = [];
         foreach ($this->args as $i => $name) {
             $value = $params[$i];
@@ -32,7 +32,7 @@ class UserFunction implements FunctionInterface
             $r = $context->calc($stat);
         }
         
-        $context->load($data);
+        $context->setState($state);
         return $r;
     }
 

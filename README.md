@@ -1,20 +1,17 @@
 # php-simple-lisp
 
-##usage
+## Usage
 
-
-    $context = new \SimpleLisp\Context();
-    $context->load([
+    $machine = new \SimpleLisp\LispMachine();
+    $machine->setState([
         'param1' => 5,
         'param2' => 1,
         'param3' => 0,
     ]);
 
-    $machine = new \SimpleLisp\LispMachine($context);
+    echo $machine->parseAndRun('5'); //5
+    echo $machine->parseAndRun('param1'); //5
+    echo $machine->parseAndRun('(AND 1 0)'); //false
+    echo $machine->parseAndRun('(AND param1 param2)'); //true
 
-    $machine->parseAndRun('5');//5
-    $machine->parseAndRun('param1');//5
-    $machine->parseAndRun('(AND 1 0)');//false
-    $machine->parseAndRun('(AND param1 param2)');//true
-
-    $machine->parseAndRun('(defun fibonacci (n) (if (> n 1) (+ (fibonacci (- n 1)) (fibonacci (- n 2))) n)) (fibonacci 7)');//13
+    echo $machine->parseAndRun('(defun fibonacci (n) (if (> n 1) (+ (fibonacci (- n 1)) (fibonacci (- n 2))) n)) (fibonacci 7)'); //13
