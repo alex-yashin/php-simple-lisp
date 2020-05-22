@@ -18,7 +18,7 @@ class LispTokenizer
     {
         $tokens = [];
 
-        while (!$this->isFinish()) {
+        while (1) {
             $token = $this->getNext();
             if (is_null($token)) {
                 break;

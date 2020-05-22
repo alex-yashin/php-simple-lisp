@@ -35,7 +35,7 @@ class LispSyntax
             array_push($list, $token);
         }
         
-        throw new \Exception('Unexpected end of program');
+        throw new \Exception('Syntax error');
     }
 
     public function next()
