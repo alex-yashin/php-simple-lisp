@@ -7,6 +7,11 @@ class LispSyntax
 
     protected $tokens = [];
 
+    /**
+     * Разбивает программу на списки
+     * @param string $lisp
+     * @return array
+     */
     public function parse($lisp)
     {
         $tokenizer = new LispTokenizer($lisp);
@@ -15,6 +20,10 @@ class LispSyntax
         return $this->getList();
     }
 
+    /**
+     * Строит список
+     * @return array
+     */
     public function getList()
     {
         $list = [];
@@ -36,6 +45,10 @@ class LispSyntax
 //        throw new \Exception('Syntax error');
     }
 
+    /**
+     * Возвращает следующий токен
+     * @return string
+     */
     public function next()
     {
         return array_shift($this->tokens);

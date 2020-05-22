@@ -27,12 +27,22 @@ class LispMachine
         $this->register('DEFUN', new Functions\DefunFunction());
     }
 
+    /**
+     * Запускает программу
+     * @param string $program текст программы
+     * @return mixed
+     */
     public function run($program)
     {
         $syntax = new LispSyntax;
         return $this->calcLists($syntax->parse($program));
     }
-    
+
+    /**
+     * Запускает программу в виде набора списков
+     * @param array $lists
+     * @return mixed
+     */
     public function calcLists($lists)
     {
         $r = null;
@@ -41,33 +51,62 @@ class LispMachine
         }
         return $r;
     }
-    
+
+    /**
+     * Задает состояние машины
+     * @param array $state
+     */
     public function setState($state)
     {
         $this->state = $state;
     }
 
+    /**
+     * Возвращает состояние машины
+     * @return array
+     */
     public function getState()
     {
         return $this->state;
     }
 
+    /**
+     * Задает переменную из состояния машины
+     * @param string $name
+     * @param mixed $value
+     */
     public function set($name, $value)
     {
         $this->state[$name] = $value;
     }
 
+    /**
+     * Возвращает значение переменной из состояния машины
+     * @param string $name
+     * @return mixed
+     */
     public function get($name)
     {
         return isset($this->state[$name]) ? $this->state[$name] : null;
     }
 
+    /**
+     * Регистрирует функцию
+     * @param string $name
+     * @param \SimpleLisp\Functions\FunctionInterface $func
+     */
     public function register($name, $func)
     {
         $norm = strtoupper($name);
         $this->library[$norm] = $func;
     }
 
+    /**
+     * Вычисляет список
+     * @param mixed $list
+     * @return mixed
+     * @throws \Exception
+     */
     public function calc($list)
     {
         if (!is_array($list)) {
