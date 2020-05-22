@@ -7,8 +7,11 @@ class SubFunction implements FunctionInterface
 
     public function run($context, $params)
     {
-        $first = array_shift($params);
-        return $first - array_sum($params);
+        $acc = $context->calc(array_shift($params));
+        foreach ($params as $value) {
+            $acc = $acc - $context->calc($value);
+        }
+        return $acc;
     }
 
 }

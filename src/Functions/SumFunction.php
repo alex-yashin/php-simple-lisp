@@ -7,7 +7,11 @@ class SumFunction implements FunctionInterface
 
     public function run($context, $params)
     {
-        return array_sum($params);
+        $acc = $context->calc(array_shift($params));
+        foreach ($params as $value) {
+            $acc = $acc + $context->calc($value);
+        }
+        return $acc;
     }
 
 }

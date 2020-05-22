@@ -24,7 +24,7 @@ class TokenizerTest extends TestCase
             ['(AND 1 1)', ['(',"AND", '1', '1', ')']],
             ['(AND 0 1)', ['(',"AND", '0', '1', ')']],
             ['(AND 1 0)', ['(',"AND", '1', '0', ')']],
-            ['(AND param1 param2)', ['(',"AND", 'param1', 'param2', ')']],
+            ['(AND param1 "param2")', ['(',"AND", 'param1', "'param2", ')']],
             ['(AND param1 (OR true false))', ['(',"AND", 'param1', '(', 'OR', 'true', 'false', ')', ')']],
             ['(AND param1 (OR true false) param2)', ['(',"AND", 'param1', '(', 'OR', 'true', 'false', ')', 'param2', ')']],
             ['(AND param1 (OR true false) param2)  ', ['(',"AND", 'param1', '(', 'OR', 'true', 'false', ')', 'param2', ')']],

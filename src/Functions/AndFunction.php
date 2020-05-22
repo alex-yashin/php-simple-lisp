@@ -10,7 +10,7 @@ class AndFunction implements FunctionInterface
         $acc = true;
         
         foreach ($params as $value) {
-            $acc = $acc && $value;
+            $acc = $acc && $context->calc($value);
         }
         
         return $acc;

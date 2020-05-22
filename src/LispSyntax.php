@@ -12,12 +12,7 @@ class LispSyntax
         $tokenizer = new LispTokenizer($lisp);
         $this->tokens = $tokenizer->getAll();
 
-        $token = $this->next();
-        if ($token == '(') {
-            return $this->getList();
-        }
-
-        return $token;
+        return $this->getList();
     }
 
     public function getList()
@@ -27,16 +22,18 @@ class LispSyntax
             if ($token == ')') {
                 return $list;
             }
-            
+
             if ($token == '(') {
                 array_push($list, $this->getList());
                 continue;
             }
-            
+
             array_push($list, $token);
         }
         
-        throw new \Exception('Syntax error');
+        return $list;
+
+//        throw new \Exception('Syntax error');
     }
 
     public function next()

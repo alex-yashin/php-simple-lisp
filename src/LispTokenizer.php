@@ -101,7 +101,7 @@ class LispTokenizer
                 }
                 $token .= $symbol;
             }
-            return $token;
+            return "'" . $token;
         }
 
         $symbol = $this->read();
@@ -126,7 +126,7 @@ class LispTokenizer
         }
         return $token;
     }
-    
+
 //    protected function log($m, $v)
 //    {
 //        echo $m;
@@ -134,5 +134,4 @@ class LispTokenizer
 //        var_dump($v);
 //        echo "\n";
 //    }
-
 }

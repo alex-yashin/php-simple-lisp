@@ -10,7 +10,6 @@ class Context
 
     public function __construct()
     {
-        $this->register('GET', new Functions\GetFunction());
         $this->register('AND', new Functions\AndFunction());
         $this->register('OR', new Functions\OrFunction());
         $this->register('NOT', new Functions\NotFunction());
@@ -23,11 +22,24 @@ class Context
         $this->register('-', new Functions\SubFunction());
         $this->register('*', new Functions\MulFunction());
         $this->register('/', new Functions\DivFunction());
+        $this->register('COND', new Functions\CondFunction());
+        $this->register('IF', new Functions\IfFunction());
+        $this->register('DEFUN', new Functions\DefunFunction());
     }
 
     public function load($data)
     {
         $this->data = $data;
+    }
+
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    public function set($name, $value)
+    {
+        $this->data[$name] = $value;
     }
 
     public function get($name)
@@ -41,14 +53,27 @@ class Context
         $this->library[$norm] = $func;
     }
 
-    public function run($name, $params)
+    public function calc($list)
     {
+        if (!is_array($list)) {
+            if (isset($list[0]) && $list[0] == "'") {
+                return substr($list, 1);
+            }
+            
+            if (is_numeric($list)) {
+                return $list;
+            }
+            
+            return $this->get($list);
+        }
+
+        $name = array_shift($list);
         $norm = strtoupper($name);
         if (!isset($this->library[$norm])) {
             throw new \Exception('Function "' . $name . '" is not found');
         }
         $func = $this->library[$norm];
-        return $func->run($this, $params);
+        return $func->run($this, $list);
     }
 
 }

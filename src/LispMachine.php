@@ -12,20 +12,13 @@ class LispMachine
         $this->context = $context;
     }
 
-    public function run($list)
+    public function run($stats)
     {
-        if (!is_array($list)) {
-            return $list;
+        $r = null;
+        foreach ($stats as $list) {
+            $r = $this->context->calc($list);
         }
-        
-        $func = array_shift($list);
-        foreach ($list as $k => $v) {
-            if (is_array($v)) {
-                $list[$k] = $this->run($v);
-            }
-        }
-
-        return $this->context->run($func, $list);
+        return $r;
     }
     
     public function parseAndRun($program)

@@ -18,42 +18,62 @@ class FunctionTest extends TestCase
         $machine = new \SimpleLisp\LispMachine($context);
 
         $this->assertEquals(5, $machine->parseAndRun('5'));
-        $this->assertEquals(5, $machine->parseAndRun('(GET param1)'));
+        $this->assertEquals(5, $machine->parseAndRun('param1'));
         $this->assertFalse($machine->parseAndRun('(AND 1 0)'));
         $this->assertTrue($machine->parseAndRun('(and 1 1)'));
-        $this->assertTrue($machine->parseAndRun('(AND (GET param1) (GET param2))'));
-        $this->assertFalse($machine->parseAndRun('(AND (GET param1) (GET param3))'));
-        $this->assertTrue($machine->parseAndRun('(OR (GET param1) (GET param3))'));
-        $this->assertFalse($machine->parseAndRun('(NOT (OR (GET param1) (GET param3)))'));
-        $this->assertTrue($machine->parseAndRun('(NOT (GET param3))'));
-        $this->assertTrue($machine->parseAndRun('(= (GET param1) 5)'));
-        $this->assertTrue($machine->parseAndRun('(= (GET param1))'));
-        $this->assertFalse($machine->parseAndRun('(= (GET param1) 1)'));
-        $this->assertTrue($machine->parseAndRun('(= (GET param1) (GET param1))'));
-        $this->assertFalse($machine->parseAndRun('(= (GET param1) (GET param1) 1)'));
+        $this->assertTrue($machine->parseAndRun('(AND param1 param2)'));
+        $this->assertFalse($machine->parseAndRun('(AND param1 param3)'));
+        $this->assertTrue($machine->parseAndRun('(OR param1 param3)'));
+        $this->assertFalse($machine->parseAndRun('(NOT (OR param1 param3))'));
+        $this->assertTrue($machine->parseAndRun('(NOT param3)'));
+        $this->assertTrue($machine->parseAndRun('(= param1 5)'));
+        $this->assertTrue($machine->parseAndRun('(= param1)'));
+        $this->assertFalse($machine->parseAndRun('(= param1 1)'));
+        $this->assertTrue($machine->parseAndRun('(= param1 param1)'));
+        $this->assertFalse($machine->parseAndRun('(= param1 param1 1)'));
 
-        $this->assertTrue($machine->parseAndRun('(>= (GET param1) (GET param1))'));
-        $this->assertTrue($machine->parseAndRun('(>= (GET param1) (GET param1) 1)'));
-        $this->assertFalse($machine->parseAndRun('(>= (GET param2) (GET param1))'));
-        $this->assertTrue($machine->parseAndRun('(<= (GET param1) (GET param1))'));
-        $this->assertTrue($machine->parseAndRun('(<= (GET param1) (GET param1) 10)'));
-        $this->assertFalse($machine->parseAndRun('(<= (GET param1) (GET param2))'));
+        $this->assertTrue($machine->parseAndRun('(>= param1 param1)'));
+        $this->assertTrue($machine->parseAndRun('(>= param1 param1 1)'));
+        $this->assertFalse($machine->parseAndRun('(>= param2 param1)'));
+        $this->assertTrue($machine->parseAndRun('(<= param1 param1)'));
+        $this->assertTrue($machine->parseAndRun('(<= param1 param1 10)'));
+        $this->assertFalse($machine->parseAndRun('(<= param1 param2)'));
 
-        $this->assertTrue($machine->parseAndRun('(> (GET param1) (GET param2))'));
-        $this->assertFalse($machine->parseAndRun('(> (GET param3) (GET param2))'));
+        $this->assertTrue($machine->parseAndRun('(> param1 param2)'));
+        $this->assertFalse($machine->parseAndRun('(> param3 param2)'));
 
-        $this->assertTrue($machine->parseAndRun('(< (GET param3) (GET param2))'));
-        $this->assertFalse($machine->parseAndRun('(< (GET param1) (GET param2))'));
-        $this->assertEquals(11, $machine->parseAndRun('(+ (GET param1) (GET param2) 5)'));
-        $this->assertEquals(-1, $machine->parseAndRun('(- (GET param1) (GET param2) 5)'));
-        $this->assertEquals(25, $machine->parseAndRun('(* (GET param1) (GET param2) 5)'));
-        $this->assertEquals(5, $machine->parseAndRun('(* (GET param1) (GET param2))'));
-        $this->assertEquals(0, $machine->parseAndRun('(* (GET param1) (GET param3))'));
-        $this->assertEquals(1, $machine->parseAndRun('(/ (GET param1) (GET param2) 5)'));
-        $this->assertEquals(5, $machine->parseAndRun('(/ (GET param1) (GET param2))'));
+        $this->assertTrue($machine->parseAndRun('(< param3 param2)'));
+        $this->assertFalse($machine->parseAndRun('(< param1 param2)'));
+        $this->assertEquals(11, $machine->parseAndRun('(+ param1 param2 5)'));
+        $this->assertEquals(-1, $machine->parseAndRun('(- param1 param2 5)'));
+        $this->assertEquals(25, $machine->parseAndRun('(* param1 param2 5)'));
+        $this->assertEquals(5, $machine->parseAndRun('(* param1 param2)'));
+        $this->assertEquals(0, $machine->parseAndRun('(* param1 param3)'));
+        $this->assertEquals(1, $machine->parseAndRun("(/ param1 param2 5)"));
+        $this->assertEquals(5, $machine->parseAndRun('(/ param1 param2)'));
 
         //thrown exception 'Division by zero';
         //$machine->parseAndRun('(/ (GET param1) (GET param3))');
+
+        $this->assertEquals(5, $machine->parseAndRun('(COND ((> param1 param2) param1) (1 param2))'));
+        $this->assertEquals(1, $machine->parseAndRun('(COND ((< param1 param2) param1) (1 param2))'));
+        $this->assertEquals(5, $machine->parseAndRun('(COND ((> param1 param2) param1) (1 param2))'));
+        $this->assertEquals(1, $machine->parseAndRun('(COND ((< param1 param2) param1) (1 param2))'));
+        $this->assertEquals(5, $machine->parseAndRun('(IF (> param1 param2) param1 param2)'));
+        $this->assertEquals(1, $machine->parseAndRun('(IF (< param1 param2) param1 param2)'));
+
+        $fibonacci = '(defun fibonacci (n)
+  (if (> n 1)
+      (+ (fibonacci (- n 1))
+         (fibonacci (- n 2)))
+      n))';
+
+        $this->assertEquals(1, $machine->parseAndRun($fibonacci. '(fibonacci 2)'));
+        $this->assertEquals(2, $machine->parseAndRun($fibonacci. '(fibonacci 3)'));
+        $this->assertEquals(3, $machine->parseAndRun($fibonacci. '(fibonacci 4)'));
+        $this->assertEquals(5, $machine->parseAndRun($fibonacci. '(fibonacci 5)'));
+        $this->assertEquals(8, $machine->parseAndRun($fibonacci. '(fibonacci 6)'));
+        $this->assertEquals(13, $machine->parseAndRun($fibonacci. '(fibonacci 7)'));
     }
 
 }

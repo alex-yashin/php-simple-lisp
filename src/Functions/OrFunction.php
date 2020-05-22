@@ -10,7 +10,7 @@ class OrFunction implements FunctionInterface
         $acc = false;
 
         foreach ($params as $value) {
-            $acc = $acc || $value;
+            $acc = $acc || $context->calc($value);
         }
 
         return $acc;

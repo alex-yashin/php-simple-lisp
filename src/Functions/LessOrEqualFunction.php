@@ -7,10 +7,10 @@ class LessOrEqualFunction implements FunctionInterface
 
     public function run($context, $params)
     {
-        $first = array_shift($params);
+        $first = $context->calc(array_shift($params));
 
         foreach ($params as $value) {
-            if ($value < $first) {
+            if ($context->calc($value) < $first) {
                 return false;
             }
         }
