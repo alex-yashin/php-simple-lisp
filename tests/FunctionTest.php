@@ -44,6 +44,16 @@ class FunctionTest extends TestCase
 
         $this->assertTrue($machine->parseAndRun('(< (GET param3) (GET param2))'));
         $this->assertFalse($machine->parseAndRun('(< (GET param1) (GET param2))'));
+        $this->assertEquals(11, $machine->parseAndRun('(+ (GET param1) (GET param2) 5)'));
+        $this->assertEquals(-1, $machine->parseAndRun('(- (GET param1) (GET param2) 5)'));
+        $this->assertEquals(25, $machine->parseAndRun('(* (GET param1) (GET param2) 5)'));
+        $this->assertEquals(5, $machine->parseAndRun('(* (GET param1) (GET param2))'));
+        $this->assertEquals(0, $machine->parseAndRun('(* (GET param1) (GET param3))'));
+        $this->assertEquals(1, $machine->parseAndRun('(/ (GET param1) (GET param2) 5)'));
+        $this->assertEquals(5, $machine->parseAndRun('(/ (GET param1) (GET param2))'));
+
+        //thrown exception 'Division by zero';
+        //$machine->parseAndRun('(/ (GET param1) (GET param3))');
     }
 
 }

@@ -19,6 +19,10 @@ class Context
         $this->register('<=', new Functions\LessOrEqualFunction());
         $this->register('<', new Functions\LessFunction());
         $this->register('>', new Functions\GreaterFunction());
+        $this->register('+', new Functions\SumFunction());
+        $this->register('-', new Functions\SubFunction());
+        $this->register('*', new Functions\MulFunction());
+        $this->register('/', new Functions\DivFunction());
     }
 
     public function load($data)
