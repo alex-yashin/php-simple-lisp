@@ -74,4 +74,34 @@ class FunctionTest extends TestCase
         $this->assertEquals(13, $machine->run($fibonacci . '(fibonacci 7)'));
     }
 
+    public function testReduce()
+    {
+        $machine = new \SimpleLisp\LispMachine();
+        $machine->setState([
+            'collection' => [
+                ['id' => 1, 'code' => 'ASD', 'price' => 5],
+                ['id' => 2, 'code' => 'ASD', 'price' => 15],
+                ['id' => 3, 'code' => 'ASD', 'price' => 4],
+                ['id' => 4, 'code' => 'XXX', 'price' => 3],
+                ['id' => 5, 'code' => 'YYY', 'price' => 8],
+                ['id' => 6, 'code' => 'ASD', 'price' => 20],
+            ],
+        ]);
+        $this->assertEquals([5, 15, 4, 3, 8, 20], $machine->run("(COLUMN collection 'price')"));
+        $this->assertEquals([
+            ['id' => 1, 'code' => 'ASD', 'price' => 5],
+            ['id' => 2, 'code' => 'ASD', 'price' => 15],
+            ['id' => 3, 'code' => 'ASD', 'price' => 4],
+            ['id' => 6, 'code' => 'ASD', 'price' => 20],
+            ], $machine->run("(FILTER collection (= code 'ASD'))"));
+        
+        $this->assertEquals(4, $machine->run("(MIN (COLUMN (FILTER collection (= code 'ASD')) 'price'))"));
+        $this->assertEquals(20, $machine->run("(MAX (COLUMN (FILTER collection (= code 'ASD')) 'price'))"));
+        
+        $this->assertEquals(4, $machine->run("(MIN (LIST 4 5 6 7))"));
+        $this->assertEquals([1, 2], $machine->run("(LIST 1 2)"));
+        $this->assertEquals([1, 2, [1, 2]], $machine->run("(LIST 1 2 (LIST 1 2))"));
+        
+    }
+
 }

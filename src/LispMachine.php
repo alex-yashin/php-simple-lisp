@@ -25,6 +25,11 @@ class LispMachine
         $this->register('COND', new Functions\CondFunction());
         $this->register('IF', new Functions\IfFunction());
         $this->register('DEFUN', new Functions\DefunFunction());
+        $this->register('LIST', new Functions\ListFunction());
+        $this->register('COLUMN', new Functions\ColumnFunction());
+        $this->register('FILTER', new Functions\FilterFunction());
+        $this->register('MIN', new Functions\MinFunction());
+        $this->register('MAX', new Functions\MaxFunction());
     }
 
     /**
