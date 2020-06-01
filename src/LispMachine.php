@@ -26,6 +26,10 @@ class LispMachine
         $this->register('IF', new Functions\IfFunction());
         $this->register('DEFUN', new Functions\DefunFunction());
         $this->register('LIST', new Functions\ListFunction());
+        $this->register('QUOTE', new Functions\QuoteFunction());
+        $this->register('CAR', new Functions\CarFunction());
+        $this->register('CDR', new Functions\CdrFunction());
+        $this->register('CONS', new Functions\ConsFunction());
         $this->register('COLUMN', new Functions\ColumnFunction());
         $this->register('FILTER', new Functions\FilterFunction());
         $this->register('MIN', new Functions\MinFunction());

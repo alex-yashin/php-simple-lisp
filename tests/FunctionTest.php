@@ -73,6 +73,28 @@ class FunctionTest extends TestCase
         $this->assertEquals(8, $machine->run($fibonacci . '(fibonacci 6)'));
         $this->assertEquals(13, $machine->run($fibonacci . '(fibonacci 7)'));
     }
+    
+    public function testBase()
+    {
+        $machine = new \SimpleLisp\LispMachine();
+        $machine->setState([
+            'param1' => 5,
+            'param2' => 1,
+            'param3' => 0,
+        ]);
+        $this->assertEquals([1, 2], $machine->run("(LIST 1 2)"));
+        $this->assertEquals([1, 2, [1, 2]], $machine->run("(LIST 1 2 (LIST 1 2))"));
+        $this->assertEquals(['LIST', 1, 2, ['LIST', 1, 2]], $machine->run('(QUOTE (LIST 1 2 (LIST 1 2))'));
+        $this->assertEquals([[3, 4]], $machine->run('(QUOTE ((3 4)))'));
+        $this->assertEquals(1, $machine->run('(CAR (QUOTE (1 2 3 4))'));
+        $this->assertEquals([2, 3, 4], $machine->run('(CDR (QUOTE (1 2 3 4))'));
+        $this->assertEquals([1, 2, 3, 4], $machine->run('(CONS 1 (QUOTE (2 3 4))'));
+        $this->assertEquals([1, 2], $machine->run('(CAR (QUOTE ((1 2) (3 4))'));
+        $this->assertEquals([[3, 4]], $machine->run('(CDR (QUOTE ((1 2) (3 4))'));
+        $this->assertEquals([[1, 2], [3, 4]], $machine->run('(CONS (QUOTE (1 2)) (QUOTE ((3 4)))'));
+//        $r = $machine->run('(CONS (QUOTE 1) (QUOTE 2))');
+//        $this->assertEquals([[1, 2], [3, 4]], $machine->run('(CONS (QUOTE 1) (QUOTE 2))'));
+    }
 
     public function testReduce()
     {
@@ -99,8 +121,7 @@ class FunctionTest extends TestCase
         $this->assertEquals(20, $machine->run("(MAX (COLUMN (FILTER collection (= code 'ASD')) 'price'))"));
         
         $this->assertEquals(4, $machine->run("(MIN (LIST 4 5 6 7))"));
-        $this->assertEquals([1, 2], $machine->run("(LIST 1 2)"));
-        $this->assertEquals([1, 2, [1, 2]], $machine->run("(LIST 1 2 (LIST 1 2))"));
+
         
     }
 
