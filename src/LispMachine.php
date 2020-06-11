@@ -14,6 +14,7 @@ class LispMachine
         $this->register('OR', new Functions\OrFunction());
         $this->register('NOT', new Functions\NotFunction());
         $this->register('=', new Functions\EqualFunction());
+        $this->register('!=', new Functions\NotEqualFunction());
         $this->register('>=', new Functions\GreaterOrEqualFunction());
         $this->register('<=', new Functions\LessOrEqualFunction());
         $this->register('<', new Functions\LessFunction());
@@ -34,6 +35,7 @@ class LispMachine
         $this->register('FILTER', new Functions\FilterFunction());
         $this->register('MIN', new Functions\MinFunction());
         $this->register('MAX', new Functions\MaxFunction());
+        $this->register('IN', new Functions\InFunction());
     }
 
     /**
