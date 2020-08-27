@@ -132,7 +132,16 @@ class FunctionTest extends TestCase
         $this->assertEquals(20, $machine->run("(MAX (COLUMN (FILTER collection (= code 'ASD')) 'price'))"));
         
         $this->assertEquals(4, $machine->run("(MIN (LIST 4 5 6 7))"));
-
+        $this->assertEquals(4, $machine->run("(MIN 4 5 6 7)"));
+        $this->assertEquals(5, $machine->run("(MIN 5)"));
+        $this->assertEquals(5, $machine->run("(MIN (LIST 5))"));
+        $this->assertEquals(null, $machine->run("(MIN)"));
+        
+        $this->assertEquals(7, $machine->run("(MAX (LIST 4 5 6 7))"));
+        $this->assertEquals(7, $machine->run("(MAX 4 5 6 7)"));
+        $this->assertEquals(5, $machine->run("(MAX 5)"));
+        $this->assertEquals(5, $machine->run("(MAX (LIST 5))"));
+        $this->assertEquals(null, $machine->run("(MAX)"));
         
     }
 
