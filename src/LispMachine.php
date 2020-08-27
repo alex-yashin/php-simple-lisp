@@ -36,6 +36,7 @@ class LispMachine
         $this->register('MIN', new Functions\MinFunction());
         $this->register('MAX', new Functions\MaxFunction());
         $this->register('IN', new Functions\InFunction());
+        $this->register('SETQ', new Functions\SetqFunction());
     }
 
     /**

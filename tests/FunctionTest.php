@@ -83,6 +83,23 @@ class FunctionTest extends TestCase
         $this->assertEquals(5, $machine->run($fibonacci . '(fibonacci 5)'));
         $this->assertEquals(8, $machine->run($fibonacci . '(fibonacci 6)'));
         $this->assertEquals(13, $machine->run($fibonacci . '(fibonacci 7)'));
+        
+        $this->assertEquals(4, $machine->run("(MIN (LIST 4 5 6 7))"));
+        $this->assertEquals(4, $machine->run("(MIN 4 5 6 7)"));
+        $this->assertEquals(5, $machine->run("(MIN 5)"));
+        $this->assertEquals(5, $machine->run("(MIN (LIST 5))"));
+        $this->assertEquals(null, $machine->run("(MIN)"));
+        
+        $this->assertEquals(7, $machine->run("(MAX (LIST 4 5 6 7))"));
+        $this->assertEquals(7, $machine->run("(MAX 4 5 6 7)"));
+        $this->assertEquals(5, $machine->run("(MAX 5)"));
+        $this->assertEquals(5, $machine->run("(MAX (LIST 5))"));
+        $this->assertEquals(null, $machine->run("(MAX)"));
+        
+        $this->assertEquals(10, $machine->run("(SETQ param10 10)"));
+        $this->assertEquals(40, $machine->run("(SETQ param10 20) (* param10 2)"));
+        $this->assertEquals(42, $machine->run("(SETQ param10 (+ 1 20)) (* param10 2)"));
+        
     }
     
     public function testBase()
@@ -130,18 +147,6 @@ class FunctionTest extends TestCase
         
         $this->assertEquals(4, $machine->run("(MIN (COLUMN (FILTER collection (= code 'ASD')) 'price'))"));
         $this->assertEquals(20, $machine->run("(MAX (COLUMN (FILTER collection (= code 'ASD')) 'price'))"));
-        
-        $this->assertEquals(4, $machine->run("(MIN (LIST 4 5 6 7))"));
-        $this->assertEquals(4, $machine->run("(MIN 4 5 6 7)"));
-        $this->assertEquals(5, $machine->run("(MIN 5)"));
-        $this->assertEquals(5, $machine->run("(MIN (LIST 5))"));
-        $this->assertEquals(null, $machine->run("(MIN)"));
-        
-        $this->assertEquals(7, $machine->run("(MAX (LIST 4 5 6 7))"));
-        $this->assertEquals(7, $machine->run("(MAX 4 5 6 7)"));
-        $this->assertEquals(5, $machine->run("(MAX 5)"));
-        $this->assertEquals(5, $machine->run("(MAX (LIST 5))"));
-        $this->assertEquals(null, $machine->run("(MAX)"));
         
     }
 
