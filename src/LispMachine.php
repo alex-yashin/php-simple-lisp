@@ -39,6 +39,7 @@ class LispMachine
         $this->register('SETQ', new Functions\SetqFunction());
         $this->register('MERGE', new Functions\MergeFunction());
         $this->register('UNIQUE', new Functions\UniqueFunction());
+        $this->register('INTERSECT', new Functions\IntersectFunction());
     }
 
     /**

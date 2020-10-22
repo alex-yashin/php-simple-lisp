@@ -148,6 +148,17 @@ class FunctionTest extends TestCase
         $this->assertEquals(4, $machine->run("(MIN (COLUMN (FILTER collection (= code 'ASD')) 'price'))"));
         $this->assertEquals(20, $machine->run("(MAX (COLUMN (FILTER collection (= code 'ASD')) 'price'))"));
         
+        $this->assertEquals([1, 2, 3, 4], $machine->run("(MERGE (LIST 1 2) (LIST 3 4))"));
+        $this->assertEquals([1, 2, 3, 4], $machine->run("(MERGE (LIST 1 2) 3 4)"));
+        $this->assertEquals([1, 2, 3, 4], $machine->run("(MERGE 1 2 3 4)"));
+        $this->assertEquals([1, 2, 1, 2, 3, 4], $machine->run("(MERGE (LIST 1 2) (LIST 1 2 3 4))"));
+        $this->assertEquals([1, 2, 3, 4], $machine->run("(UNIQUE (MERGE (LIST 1 2) (LIST 1 2 3 4)))"));
+        $this->assertEquals([1, 2, 3, 4], $machine->run("(UNIQUE (LIST 1 2) (LIST 1 2 3 4))"));
+        $this->assertEquals([1, 2, 3, 4], $machine->run("(UNIQUE (LIST 1 2) 1 2 3 4)"));
+        $this->assertEquals([1, 2, 3, 4], $machine->run("(UNIQUE 1 2 1 2 3 4)"));
+        $this->assertEquals([], $machine->run("(INTERSECT 1 2 1 2 3 4)"));
+        $this->assertEquals([1, 2], $machine->run("(INTERSECT (LIST 1 2) (LIST 1 2 3 4))"));
+        $this->assertEquals([], $machine->run("(INTERSECT (LIST 1 2) 1 2 3 4)"));
     }
 
 }
