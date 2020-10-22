@@ -37,6 +37,8 @@ class LispMachine
         $this->register('MAX', new Functions\MaxFunction());
         $this->register('IN', new Functions\InFunction());
         $this->register('SETQ', new Functions\SetqFunction());
+        $this->register('MERGE', new Functions\MergeFunction());
+        $this->register('UNIQUE', new Functions\UniqueFunction());
     }
 
     /**
