@@ -15,7 +15,7 @@ class IntersectFunction implements FunctionInterface
             $array = array_intersect($array, is_array($item) ? $item : [$item]);
         }
         
-        return $array;
+        return array_values($array);
     }
 
 }
