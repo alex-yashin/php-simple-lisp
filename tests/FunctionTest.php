@@ -95,6 +95,27 @@ class FunctionTest extends TestCase
         $this->assertEquals(5, $machine->run("(MAX 5)"));
         $this->assertEquals(5, $machine->run("(MAX (LIST 5))"));
         $this->assertEquals(null, $machine->run("(MAX)"));
+        $this->assertEquals(5, $machine->run("(COUNT (LIST 1 2 3 4 5))"));
+        $this->assertEquals(0, $machine->run("(COUNT (LIST))"));
+        $this->assertEquals(0, $machine->run("(COUNT)"));
+        $this->assertEquals(1, $machine->run("(COUNT_VALUE (LIST 1 2 3 4 5) 5)"));
+        $this->assertEquals(0, $machine->run("(COUNT_VALUE (LIST 1 2 3 4 5) 6)"));
+        $this->assertEquals(0, $machine->run("(COUNT_VALUE (LIST) 6)"));
+        $this->assertEquals(0, $machine->run("(COUNT_VALUE 5 6)"));
+        $this->assertEquals(1, $machine->run("(COUNT_VALUE 6 6)"));
+        $this->assertEquals(1, $machine->run("(INTDIV 6 6)"));
+        $this->assertEquals(1, $machine->run("(INTDIV 7 6)"));
+        $this->assertEquals(0, $machine->run("(INTDIV 5 6)"));
+        $this->assertEquals(2, $machine->run("(INTDIV 13 6)"));
+        $this->assertEquals(1, $machine->run("(INTDIV 100 21 3)"));
+        $this->assertEquals(1, $machine->run("(MOD 5 4)"));
+        $this->assertEquals(2, $machine->run("(% 10 4)"));
+        $this->assertEquals(0, $machine->run("(% 0 4)"));
+        $this->assertEquals([2, 3], $machine->run("(SLICE (LIST 1 2 3 4 5) 1 2)"));
+        $this->assertEquals([2, 3, 4, 5], $machine->run("(SLICE (LIST 1 2 3 4 5) 1)"));
+        $this->assertEquals([1], $machine->run("(SLICE (LIST 1 2 3 4 5) 0 1)"));
+        $this->assertEquals([5, 4, 3, 2, 1], $machine->run("(SORT (LIST 1 2 3 4 5) 'DESC')"));
+        $this->assertEquals(15, $machine->run("(SUM (LIST 1 2 3 4 5))"));
         
         $this->assertEquals(10, $machine->run("(SETQ param10 10)"));
         $this->assertEquals(40, $machine->run("(SETQ param10 20) (* param10 2)"));

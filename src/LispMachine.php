@@ -40,6 +40,15 @@ class LispMachine
         $this->register('MERGE', new Functions\MergeFunction());
         $this->register('UNIQUE', new Functions\UniqueFunction());
         $this->register('INTERSECT', new Functions\IntersectFunction());
+        
+        $this->register('SUM', new Functions\SumListFunction());
+        $this->register('INTDIV', new Functions\IntdivFunction());
+        $this->register('%', new Functions\ModFunction());
+        $this->register('MOD', new Functions\ModFunction());
+        $this->register('COUNT', new Functions\CountFunction());
+        $this->register('COUNT_VALUE', new Functions\CountValueFunction());
+        $this->register('SORT', new Functions\SortFunction());
+        $this->register('SLICE', new Functions\SliceFunction());
     }
 
     /**
