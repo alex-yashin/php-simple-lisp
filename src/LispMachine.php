@@ -2,6 +2,8 @@
 
 namespace SimpleLisp;
 
+use Exception;
+
 class LispMachine
 {
 
@@ -40,7 +42,7 @@ class LispMachine
         $this->register('MERGE', new Functions\MergeFunction());
         $this->register('UNIQUE', new Functions\UniqueFunction());
         $this->register('INTERSECT', new Functions\IntersectFunction());
-        
+
         $this->register('SUM', new Functions\SumListFunction());
         $this->register('INTDIV', new Functions\IntdivFunction());
         $this->register('%', new Functions\ModFunction());
@@ -49,12 +51,17 @@ class LispMachine
         $this->register('COUNT_VALUE', new Functions\CountValueFunction());
         $this->register('SORT', new Functions\SortFunction());
         $this->register('SLICE', new Functions\SliceFunction());
+        $this->register('RANGE', new Functions\RangeFunction());
+
+        $this->register('MAP', new Functions\MapFunction());
+        $this->register('REDUCE', new Functions\ReduceFunction());
     }
 
     /**
      * Запускает программу
      * @param string $program текст программы
      * @return mixed
+     * @throws Exception
      */
     public function run($program)
     {
@@ -66,6 +73,7 @@ class LispMachine
      * Запускает программу в виде набора списков
      * @param array $lists
      * @return mixed
+     * @throws Exception
      */
     public function calcLists($lists)
     {
@@ -129,7 +137,7 @@ class LispMachine
      * Вычисляет список
      * @param mixed $list
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function calc($list)
     {
@@ -148,7 +156,7 @@ class LispMachine
         $name = array_shift($list);
         $norm = strtoupper($name);
         if (!isset($this->library[$norm])) {
-            throw new \Exception('Function "' . $name . '" is not found');
+            throw new Exception('Function "' . $name . '" is not found');
         }
         $func = $this->library[$norm];
         return $func->run($this, $list);

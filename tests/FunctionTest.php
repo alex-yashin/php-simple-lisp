@@ -1,14 +1,17 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Pina\Input;
+use SimpleLisp\LispMachine;
 
 class FunctionTest extends TestCase
 {
 
+    /**
+     * @throws Exception
+     */
     public function testFunctions()
     {
-        $machine = new \SimpleLisp\LispMachine();
+        $machine = new LispMachine();
         $machine->setState([
             'param1' => 5,
             'param2' => 1,
@@ -122,10 +125,13 @@ class FunctionTest extends TestCase
         $this->assertEquals(42, $machine->run("(SETQ param10 (+ 1 20)) (* param10 2)"));
         
     }
-    
+
+    /**
+     * @throws Exception
+     */
     public function testBase()
     {
-        $machine = new \SimpleLisp\LispMachine();
+        $machine = new LispMachine();
         $machine->setState([
             'param1' => 5,
             'param2' => 1,
@@ -145,9 +151,12 @@ class FunctionTest extends TestCase
 //        $this->assertEquals([[1, 2], [3, 4]], $machine->run('(CONS (QUOTE 1) (QUOTE 2))'));
     }
 
+    /**
+     * @throws Exception
+     */
     public function testReduce()
     {
-        $machine = new \SimpleLisp\LispMachine();
+        $machine = new LispMachine();
         $machine->setState([
             'collection' => [
                 ['id' => 1, 'code' => 'ASD', 'price' => 5],
@@ -180,6 +189,9 @@ class FunctionTest extends TestCase
         $this->assertEquals([], $machine->run("(INTERSECT 1 2 1 2 3 4)"));
         $this->assertEquals([1, 2], $machine->run("(INTERSECT (LIST 1 2) (LIST 1 2 3 4))"));
         $this->assertEquals([], $machine->run("(INTERSECT (LIST 1 2) 1 2 3 4)"));
+
+        $this->assertEquals([1, 3, 5], $machine->run("(SETQ data (RANGE 1 5)) (DEFUN odd(num) (% num 2)) (REDUCE data odd)"));
+        $this->assertEquals([2, 4, 6, 8, 10], $machine->run("(SETQ data (RANGE 1 5)) (DEFUN mul2(num) (* num 2)) (MAP data mul2)"));
     }
 
 }
