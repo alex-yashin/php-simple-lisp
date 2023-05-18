@@ -5,22 +5,24 @@ namespace SimpleLisp\Functions;
 class InFunction implements FunctionInterface
 {
 
+    /**
+     * @param \SimpleLisp\LispMachine $context
+     * @param array $params
+     * @return mixed
+     * @throws \Exception
+     */
     public function run($context, $params)
     {
-        $first = $context->calc(array_shift($params));
-        
-        return $this->inArray($context, $first, $params);
-    }
-    
-    public function inArray($context, $first, $params)
-    {
+        $needle = $context->calc(array_shift($params));
+
         foreach ($params as $value) {
             $calculated = $context->calc($value);
-            if (is_array($calculated) && $this->inArray($context, $first, $calculated)) {
+
+            if (is_array($calculated) && in_array($needle, $calculated)) {
                 return true;
             }
-            
-            if ($calculated == $first) {
+
+            if ($needle == $calculated) {
                 return true;
             }
         }

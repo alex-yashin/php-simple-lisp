@@ -56,13 +56,23 @@ class FunctionTest extends TestCase
         $this->assertEquals(0, $machine->run('(* param1 param3)'));
         $this->assertEquals(1, $machine->run("(/ param1 param2 5)"));
         $this->assertEquals(5, $machine->run('(/ param1 param2)'));
-        
+
         $this->assertTrue($machine->run('(IN param1 1 2 3 4 5)'));
         $this->assertFalse($machine->run('(IN param1 1 2 3 4)'));
         $this->assertTrue($machine->run('(IN param1 param1 param2 param3)'));
         $this->assertFalse($machine->run('(IN param1 param2 param3)'));
-        $this->assertTrue($machine->run('(IN param1 (QUOTE (param1 param2 param3)))'));
+
+        //param1 справа экранирован через quote не вычисляется
+        $this->assertFalse($machine->run('(IN param1 (QUOTE (param1 param2 param3)))'));
         $this->assertFalse($machine->run('(IN param1 (QUOTE (param2 param3)))'));
+
+        $this->assertTrue($machine->run('(IN param1 (LIST 1 2 3 4 5))'));
+        $this->assertFalse($machine->run('(IN param1 (LIST 1 2 3 4))'));
+        $this->assertTrue($machine->run('(IN param1 (LIST param1 param2 param3))'));
+        $this->assertFalse($machine->run('(IN param1 (LIST param2 param3))'));
+
+        $this->assertTrue($machine->run('(IN "N" (LIST "" "N"))'));
+        $this->assertTrue($machine->run('(IN "N" "" "N")'));
 
         //thrown exception 'Division by zero';
         //$machine->run('(/ (GET param1) (GET param3))');
