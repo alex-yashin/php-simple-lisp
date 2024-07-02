@@ -19,7 +19,7 @@ class UserFunction implements FunctionInterface
         $state = $context->getState();
         $ps = [];
         foreach ($this->args as $i => $name) {
-            $value = $params[$i];
+            $value = isset($params[$i]) ? $params[$i] : null;
             $ps[$name] = $context->calc($value);
         }
         

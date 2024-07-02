@@ -133,7 +133,10 @@ class FunctionTest extends TestCase
         $this->assertEquals(10, $machine->run("(SETQ param10 10)"));
         $this->assertEquals(40, $machine->run("(SETQ param10 20) (* param10 2)"));
         $this->assertEquals(42, $machine->run("(SETQ param10 (+ 1 20)) (* param10 2)"));
-        
+
+        $this->assertTrue($machine->run('(defun get() (OR 1 0)) (get)'));
+        $this->assertTrue($machine->run('(defun get(a) (OR 1 0)) (get)'));
+
     }
 
     /**
