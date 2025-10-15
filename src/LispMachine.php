@@ -7,7 +7,7 @@ use Exception;
 class LispMachine
 {
 
-    private $library = [];
+    protected $library = [];
     protected $state = [];
 
     public function __construct()
