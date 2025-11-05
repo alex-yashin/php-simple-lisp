@@ -18,14 +18,12 @@ class ReduceFunction implements FunctionInterface
         $array = $context->calc(array_shift($params));
         $condition = array_shift($params);
 
-        $r = [];
-        foreach ($array as $item) {
-            if ($context->calc(array($condition, $item))) {
-                $r[] = $item;
-            }
+        $acc = null;
+        foreach ($array as $k => $item) {
+            $acc = $context->calc(array($condition, $acc, $item, $k));
         }
 
-        return $r;
+        return $acc;
     }
 
 }

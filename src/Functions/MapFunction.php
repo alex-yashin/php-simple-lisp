@@ -20,7 +20,7 @@ class MapFunction implements FunctionInterface
 
         $r = [];
         foreach ($array as $k => $item) {
-            $r[$k] = $context->calc(array($condition, $item));
+            $r[$k] = $context->calc(array($condition, $item, $k));
         }
 
         return $r;

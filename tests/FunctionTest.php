@@ -203,7 +203,7 @@ class FunctionTest extends TestCase
         $this->assertEquals([1, 2], $machine->run("(INTERSECT (LIST 1 2) (LIST 1 2 3 4))"));
         $this->assertEquals([], $machine->run("(INTERSECT (LIST 1 2) 1 2 3 4)"));
 
-        $this->assertEquals([1, 3, 5], $machine->run("(SETQ data (RANGE 1 5)) (DEFUN odd(num) (% num 2)) (REDUCE data odd)"));
+        $this->assertEquals(25, $machine->run("(SETQ data (RANGE 1 5)) (DEFUN test(acc num index) (+ acc num index)) (REDUCE data test)"));
         $this->assertEquals([2, 4, 6, 8, 10], $machine->run("(SETQ data (RANGE 1 5)) (DEFUN mul2(num) (* num 2)) (MAP data mul2)"));
     }
 
