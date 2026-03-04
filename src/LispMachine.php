@@ -150,7 +150,11 @@ class LispMachine
                 return $list;
             }
 
-            return $this->get($list);
+            if (is_string($list)) {
+                return $this->get($list);
+            }
+
+            return $list;
         }
 
         $name = array_shift($list);
