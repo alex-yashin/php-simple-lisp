@@ -142,7 +142,7 @@ class LispMachine
     public function calc($list)
     {
         if (!is_array($list)) {
-            if (isset($list[0]) && $list[0] == "'") {
+            if (is_string($list) && isset($list[0]) && $list[0] == "'") {
                 return substr($list, 1);
             }
 
